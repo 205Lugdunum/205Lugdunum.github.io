@@ -310,6 +310,15 @@ section {
   border-color: var(--accent-blue);
 }
 
+.team-photo {
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  border: 4px solid var(--border-color);
+}
+
 /* ==================================
    RESPONSIVE
 ================================== */
@@ -341,5 +350,12 @@ section {
   }
   .section-title {
     font-size: 2rem;
+  }
+  .team-photo {
+    max-width: 100%;
+    margin: 0 auto;
+    border-width: 2px;
+    border-radius: 8px;
+    width: 85%; /* Reduces size so it isn't too large on mobile */
   }
 }
