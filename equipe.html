@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Équipe - 205 LUGDUNUM</title>
+    <meta name="description" content="Découvrez les membres de l'équipage 205 LUGDUNUM : Alexis, Baptiste et Joseph. Leurs profils techniques garantissent la réussite de ce défi.">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .profile-card {
+            background: #FFF;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+        .profile-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-red);
+        }
+        .profile-header {
+            height: 120px;
+            background: linear-gradient(135deg, var(--accent-blue), #2c5268);
+            position: relative;
+        }
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            background-color: #FFF;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 4px solid #FFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+        }
+        .profile-avatar svg {
+            width: 60px;
+            height: 60px;
+            stroke: var(--accent-red);
+        }
+        .profile-body {
+            padding: 80px 2rem 2rem;
+            text-align: center;
+        }
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+        .profile-role {
+            display: inline-block;
+            background: var(--bg-light);
+            color: var(--accent-red);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .profile-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        .skill-tag {
+            font-size: 0.8rem;
+            font-weight: 500;
+            background: #E2E8F0;
+            color: var(--text-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <header class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo-link">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" stroke="#E63946" stroke-width="10"/>
+                    <path d="M30 65L50 30L70 65" stroke="#457B9D" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="logo-text">205<span>LUG</span>DUNUM</span>
+            </a>
+            
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 6H20M4 12H20M4 18H20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="europ_raid.html">L'Europ'Raid</a></li>
+                    <li><a href="equipe.html" style="color: var(--accent-red);">L'Équipe</a></li>
+                    <li><a href="budget.html">Le Budget</a></li>
+                    <li><a href="aider.html" class="btn btn-primary" style="padding: 0.5rem 1rem; color: #FFF; border-radius: 4px;">Comment nous aider</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section style="background-color: var(--bg-light); padding: 6rem 0 4rem; text-align: center;">
+        <div class="container">
+            <h1 class="section-title">L'Équipage <span class="text-red">205 LUGDUNUM</span></h1>
+            <p style="font-size: 1.2rem; color: var(--text-light); max-width: 600px; margin: 0 auto;">Un trio aux compétences techniques pointues pour affronter les 8000 kilomètres en toute fiabilité.</p>
+        </div>
+    </section>
+
+    <!-- Profiles Grid Secion -->
+    <section>
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
+                
+                <!-- Card 1: Alexis -->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="profile-body">
+                        <h3 class="profile-name">Alexis Michelin</h3>
+                        <div class="profile-role">Ingénierie</div>
+                        <p style="color: var(--text-light); font-size: 0.95rem;">Passionné de mécanique et expert en gestion de projets techniques, Alexis s'assure que chaque pièce de la 205 est optimisée pour l'endurance extrême.</p>
+                        <div class="profile-skills">
+                            <span class="skill-tag">Mécanique Auto</span>
+                            <span class="skill-tag">Gestion Projet</span>
+                            <span class="skill-tag">Conception CAO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Baptiste -->
+                <div class="profile-card">
+                    <div class="profile-header" style="background: linear-gradient(135deg, var(--accent-red), #b52c36);">
+                        <div class="profile-avatar">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="profile-body">
+                        <h3 class="profile-name">Baptiste Inami</h3>
+                        <div class="profile-role">Horlogerie</div>
+                        <p style="color: var(--text-light); font-size: 0.95rem;">La précision de l'horlogerie au service de la fiabilité. Baptiste apporte une rigueur millimétrée aux réglages fins du véhicule et à la logistique du raid.</p>
+                        <div class="profile-skills">
+                            <span class="skill-tag">Précision & Rigueur</span>
+                            <span class="skill-tag">Dépannage fin</span>
+                            <span class="skill-tag">Micromécanique</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Joseph -->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="profile-body">
+                        <h3 class="profile-name">Joseph Fournier</h3>
+                        <div class="profile-role">Ingénierie</div>
+                        <p style="color: var(--text-light); font-size: 0.95rem;">Le MacGyver de l'équipe. L'approche pragmatique de Joseph face aux imprévus techniques assure au projet une réactivité à toute épreuve.</p>
+                        <div class="profile-skills">
+                            <span class="skill-tag">Systèmes Embarqués</span>
+                            <span class="skill-tag">Fiabilité</span>
+                            <span class="skill-tag">Résolution de problèmes</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div style="text-align: center; margin-top: 4rem;">
+                <p style="font-size: 1.1rem; color: var(--text-light); margin-bottom: 2rem;">Une alliance unique pour une fiabilité maximale au service de l'action solidaire.</p>
+                <img src="assets/team-car.jpg" alt="L'équipe et leur Peugeot 205" style="border-radius: 12px; box-shadow: var(--shadow-lg); max-width: 800px; margin: 0 auto; border: 4px solid var(--border-color);">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="logo-link" style="margin-bottom: 1.5rem;">
+                        <span class="logo-text" style="color:#FFF;">205<span style="color:var(--accent-red)">LUG</span>DUNUM</span>
+                    </div>
+                    <p>Une équipe engagée dans l'Europ'Raid pour acheminer du matériel scolaire en Europe de l'Est via un défi sportif et culturel inoubliable.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <p>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 4L12 14L22 4"/></svg>
+                        <a href="mailto:contact@205lugdunum.fr">contact@205lugdunum.fr</a>
+                    </p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Association</h3>
+                    <p>N° RNA : W123456789</p>
+                    <p>SIREN : 123 456 789 00012</p>
+                    <p>Association à but non lucratif.</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                &copy; 2024 Association 205 LUGDUNUM. Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Budget - 205 LUGDUNUM</title>
+    <meta name="description" content="Découvrez le budget détaillé du projet 205 LUGDUNUM pour l'Europ'Raid. Un besoin estimé à près de 10 000€ pour réaliser cette aventure solidaire.">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .budget-card {
+            background: #FFF;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            border-top: 5px solid var(--accent-blue);
+            text-align: center;
+        }
+        .budget-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-red);
+            font-family: var(--font-heading);
+            margin: 1rem 0;
+        }
+        .budget-bar-container {
+            width: 100%;
+            height: 20px;
+            background: #E2E8F0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        .budget-bar {
+            height: 100%;
+            background: var(--accent-blue);
+        }
+        .budget-list {
+            margin-top: 4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .budget-item {
+            background: #FFF;
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--accent-blue);
+        }
+        .budget-item.red { border-left-color: var(--accent-red); }
+        .budget-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-color);
+        }
+        .budget-value {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <header class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo-link">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" stroke="#E63946" stroke-width="10"/>
+                    <path d="M30 65L50 30L70 65" stroke="#457B9D" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="logo-text">205<span>LUG</span>DUNUM</span>
+            </a>
+            
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 6H20M4 12H20M4 18H20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="europ_raid.html">L'Europ'Raid</a></li>
+                    <li><a href="equipe.html">L'Équipe</a></li>
+                    <li><a href="budget.html" style="color: var(--accent-red);">Le Budget</a></li>
+                    <li><a href="aider.html" class="btn btn-primary" style="padding: 0.5rem 1rem; color: #FFF; border-radius: 4px;">Comment nous aider</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section style="background-color: var(--bg-light); padding: 6rem 0 4rem; text-align: center;">
+        <div class="container">
+            <h1 class="section-title">Le <span class="text-blue">Budget</span></h1>
+            <p style="font-size: 1.2rem; color: var(--text-light); max-width: 600px; margin: 0 auto;">Un projet d'envergure nécessite un financement solide. Voici la répartition de notre budget estimé.</p>
+        </div>
+    </section>
+
+    <!-- Budget Overview Section -->
+    <section>
+        <div class="container">
+            <div style="max-width: 600px; margin: 0 auto; margin-bottom: 4rem;">
+                <div class="budget-card" style="border-top-color: var(--accent-red);">
+                    <h2 style="font-size: 1.5rem; text-transform: uppercase;">Budget Global Estimé</h2>
+                    <div class="budget-amount">~ 10 000 €</div>
+                    <p style="color: var(--text-light);">Ce montant couvre l'intégralité des frais liés à l'inscription, la préparation de la voiture, et la logistique de l'aventure.</p>
+                </div>
+            </div>
+
+            <h3 class="text-center" style="font-size: 2rem; margin-bottom: 2rem;">Répartition Détaillée</h3>
+            
+            <div class="budget-list">
+                <div class="budget-item red">
+                    <div>
+                        <div class="budget-title">Organisation & Inscription</div>
+                        <p style="color: var(--text-light); font-size: 0.9rem; margin-top: 0.5rem;">Frais d'inscription à l'Europ'Raid, assurance, balise GPS, logistique globale.</p>
+                    </div>
+                    <div class="budget-value text-red">5 190 €</div>
+                </div>
+
+                <div class="budget-item">
+                    <div>
+                        <div class="budget-title">Préparation Voiture</div>
+                        <p style="color: var(--text-light); font-size: 0.9rem; margin-top: 0.5rem;">Achat de la 205, pièces mécaniques, pneus, révision complète, peinture, décoration.</p>
+                    </div>
+                    <div class="budget-value text-blue">3 643 €</div>
+                </div>
+
+                <div class="budget-item">
+                    <div>
+                        <div class="budget-title">Extra & Imprévus</div>
+                        <p style="color: var(--text-light); font-size: 0.9rem; margin-top: 0.5rem;">Frais de route (péages, carburant de liaison), marge de sécurité pour la mécanique.</p>
+                    </div>
+                    <div class="budget-value">1 494 €</div>
+                </div>
+
+                <div class="budget-item">
+                    <div>
+                        <div class="budget-title">Camping & Survie</div>
+                        <p style="color: var(--text-light); font-size: 0.9rem; margin-top: 0.5rem;">Tentes, réchauds, nourriture spécifique, équipement de bivouac pour 22 jours.</p>
+                    </div>
+                    <div class="budget-value">644 €</div>
+                </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 4rem;">
+                <p style="font-size: 1.2rem; font-weight: 500; margin-bottom: 1.5rem;">Aidez-nous à boucler ce budget et devenez partenaire du projet !</p>
+                <a href="aider.html" class="btn btn-primary">Découvrir comment nous aider</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="logo-link" style="margin-bottom: 1.5rem;">
+                        <span class="logo-text" style="color:#FFF;">205<span style="color:var(--accent-red)">LUG</span>DUNUM</span>
+                    </div>
+                    <p>Une équipe engagée dans l'Europ'Raid pour acheminer du matériel scolaire en Europe de l'Est via un défi sportif et culturel inoubliable.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <p>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 4L12 14L22 4"/></svg>
+                        <a href="mailto:contact@205lugdunum.fr">contact@205lugdunum.fr</a>
+                    </p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Association</h3>
+                    <p>N° RNA : W123456789</p>
+                    <p>SIREN : 123 456 789 00012</p>
+                    <p>Association à but non lucratif.</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                &copy; 2024 Association 205 LUGDUNUM. Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
