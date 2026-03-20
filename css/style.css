@@ -91,6 +91,17 @@ img {
   transform: translateX(-50%);
 }
 
+.hero-title {
+  font-size: 4rem;
+}
+
+.grid-2-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
 /* ==================================
    BUTTONS
 ================================== */
@@ -303,8 +314,27 @@ section {
    RESPONSIVE
 ================================== */
 @media (max-width: 768px) {
+  .grid-2-col {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .hero-title {
+    font-size: 2.5rem !important;
+  }
   .nav-links {
-    display: none; /* simple mobile menu hidden by default */
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: var(--header-height);
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-color);
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    gap: 1.5rem;
+  }
+  .nav-links.active {
+    display: flex;
   }
   .mobile-menu-btn {
     display: block;
