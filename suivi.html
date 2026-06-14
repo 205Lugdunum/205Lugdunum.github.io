@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi des Travaux - 205 LUGDUNUM</title>
+    <meta name="description" content="Suivez en temps réel la préparation de la Peugeot 205 de l'équipage 205 LUGDUNUM pour l'Europ'Raid 2027.">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ============================
+           PAGE SUIVI — STYLES SPÉCIFIQUES
+        ============================ */
+
+        .suivi-hero {
+            background-color: var(--bg-light);
+            padding: 4rem 0 3rem;
+            text-align: center;
+        }
+
+        .suivi-hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Barre de progression globale */
+        .progress-bar-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .progress-label span:last-child {
+            color: var(--accent-red);
+            font-size: 1.2rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background-color: var(--border-color);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            /* ➡️ MODIFIER CE POURCENTAGE selon l'avancement réel */
+            width: 15%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-red));
+            border-radius: 999px;
+            transition: width 1s ease;
+        }
+
+        /* Filtres de statut */
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 999px;
+            border: 2px solid var(--border-color);
+            background: transparent;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-light);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+            background-color: rgba(230, 57, 70, 0.05);
+        }
+
+        .filter-btn[data-filter="termine"].active {
+            border-color: #2ecc71;
+            color: #2ecc71;
+            background-color: rgba(46, 204, 113, 0.05);
+        }
+
+        .filter-btn[data-filter="en-cours"].active {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+            background-color: rgba(69, 123, 157, 0.08);
+        }
+
+        .filter-btn[data-filter="a-venir"].active {
+            border-color: #999;
+            color: #999;
+            background-color: rgba(0,0,0,0.03);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+            transform: translateX(-50%);
+        }
+
+        /* Card update */
+        .update-card {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            align-items: flex-start;
+        }
+
+        .update-card.hidden {
+            display: none;
+        }
+
+        /* Point sur la timeline */
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 1.5rem;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 3px solid #FFF;
+            box-shadow: 0 0 0 2px var(--border-color);
+            z-index: 2;
+            flex-shrink: 0;
+        }
+
+        .timeline-dot.termine  { background-color: #2ecc71; box-shadow: 0 0 0 2px #2ecc71; }
+        .timeline-dot.en-cours { background-color: var(--accent-blue); box-shadow: 0 0 0 2px var(--accent-blue); }
+        .timeline-dot.a-venir  { background-color: #ccc; box-shadow: 0 0 0 2px #ccc; }
+
+        /* Alternance gauche/droite */
+        .update-card .card-content {
+            width: calc(50% - 2rem);
+            background: #FFF;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .update-card .card-content:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-blue);
+        }
+
+        .update-card:nth-child(odd) .card-content {
+            margin-left: auto;
+            margin-right: calc(50% + 2rem);
+        }
+
+        .update-card:nth-child(even) .card-content {
+            margin-left: calc(50% + 2rem);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-img-placeholder {
+            width: 100%;
+            height: 180px;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--border-color);
+        }
+
+        .card-img-placeholder svg {
+            width: 48px;
+            height: 48px;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .card-date {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-family: var(--font-heading);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-termine  { background: rgba(46,204,113,0.12); color: #27ae60; }
+        .badge-en-cours { background: rgba(69,123,157,0.12); color: var(--accent-blue); }
+        .badge-a-venir  { background: rgba(0,0,0,0.06); color: #888; }
+
+        .badge::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .badge-termine::before  { background: #2ecc71; }
+        .badge-en-cours::before { background: var(--accent-blue); }
+        .badge-a-venir::before  { background: #ccc; }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .card-instagram {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            font-weight: 600;
+            font-family: var(--font-heading);
+            transition: var(--transition);
+        }
+
+        .card-instagram:hover {
+            color: var(--accent-red);
+        }
+
+        /* Catégorie tag */
+        .card-category {
+            display: inline-block;
+            font-size: 0.78rem;
+            color: var(--accent-red);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.4rem;
+        }
+
+        /* État vide si aucun résultat filtré */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+            display: none;
+        }
+
+        .empty-state svg {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            stroke: var(--border-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timeline::before { left: 16px; }
+
+            .timeline-dot {
+                left: 16px;
+                top: 1.2rem;
+            }
+
+            .update-card .card-content,
+            .update-card:nth-child(odd) .card-content,
+            .update-card:nth-child(even) .card-content {
+                width: 100%;
+                margin-left: 3rem;
+                margin-right: 0;
+            }
+
+            .filter-bar { gap: 0.5rem; }
+            .filter-btn { font-size: 0.8rem; padding: 0.4rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <header class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo-link">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" stroke="#E63946" stroke-width="10" />
+                    <path d="M30 65L50 30L70 65" stroke="#457B9D" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="logo-text">205<span>LUG</span>DUNUM</span>
+            </a>
+            <button class="mobile-menu-btn" aria-label="Menu"
+                onclick="document.querySelector('.nav-links').classList.toggle('active')">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 6H20M4 12H20M4 18H20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="europ_raid.html">L'Europ'Raid</a></li>
+                    <li><a href="equipe.html">L'Équipe</a></li>
+                    <li><a href="budget.html">Le Budget</a></li>
+                    <li><a href="suivi.html" style="color: var(--accent-red);">Préparation</a></li>
+                    <li><a href="aider.html" class="btn btn-primary"
+                            style="padding: 0.5rem 1rem; color: #FFF; border-radius: 4px;">Comment nous aider</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="suivi-hero">
+        <div class="container">
+            <h1 class="section-title" style="display:inline-block;">
+                Préparation <span class="text-red">205</span>
+            </h1>
+            <p>Suivez étape par étape la transformation de notre Peugeot 205 GR pour l'Europ'Raid 2027.</p>
+
+            <!-- Barre de progression globale -->
+            <div class="progress-bar-wrapper">
+                <div class="progress-label">
+                    <span>Avancement global</span>
+                    <!-- ➡️ MODIFIER CE CHIFFRE selon l'avancement réel -->
+                    <span>15%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filtres -->
+    <section style="padding: 3rem 0 0;">
+        <div class="container">
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">Tout voir</button>
+                <button class="filter-btn" data-filter="termine">✓ Terminé</button>
+                <button class="filter-btn" data-filter="en-cours">⟳ En cours</button>
+                <button class="filter-btn" data-filter="a-venir">◷ À venir</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline des updates -->
+    <section style="padding: 2rem 0 5rem;">
+        <div class="container">
+            <div class="timeline" id="timeline">
+
+                <!-- ============================================================
+                     ➡️ ZONE À MODIFIER — Ajouter / modifier les updates ici
+                     Copier-coller un bloc .update-card pour ajouter une étape.
+                     Attributs à modifier :
+                       data-status = "termine" | "en-cours" | "a-venir"
+                       .timeline-dot class = idem
+                       .badge class = badge-termine | badge-en-cours | badge-a-venir
+                       .card-date = date de l'update
+                       .card-category = catégorie (Mécanique, Carrosserie, Électronique...)
+                       .card-title = titre court
+                       .card-desc = description
+                       href du lien Instagram = lien vers le post correspondant
+                       <img src="..."> = chemin vers la photo (ou laisser le placeholder)
+                ============================================================ -->
+
+                <!-- UPDATE 1 — Terminé -->
+                <div class="update-card" data-status="termine">
+                    <div class="timeline-dot termine"></div>
+                    <div class="card-content">
+                        <!-- Remplacer par <img class="card-img" src="assets/suivi/depouillement.jpg" alt="..."> quand la photo est dispo -->
+                        <div class="card-img-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <path d="M21 15l-5-5L5 21"/>
+                            </svg>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="card-date">Juin 2025</span>
+                                <span class="badge badge-termine">Terminé</span>
+                            </div>
+                            <span class="card-category">Mécanique</span>
+                            <h3 class="card-title">Acquisition & dépouillement complet</h3>
+                            <p class="card-desc">Achat de la 205 GR 1.4 pour 600€. Début du dépouillement complet de l'habitacle — tout ce qui ne sert pas à rouler dégage. Premier diagnostic mécanique réalisé.</p>
+                            <!-- Remplacer # par le lien du post Instagram -->
+                            <a href="#" class="card-instagram" target="_blank" rel="noopener">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="2" width="20" height="20" rx="5"/>
+                                    <circle cx="12" cy="12" r="4"/>
+                                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                                </svg>
+                                Voir sur Instagram
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UPDATE 2 — En cours -->
+                <div class="update-card" data-status="en-cours">
+                    <div class="timeline-dot en-cours"></div>
+                    <div class="card-content">
+                        <div class="card-img-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <path d="M21 15l-5-5L5 21"/>
+                            </svg>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="card-date">En cours</span>
+                                <span class="badge badge-en-cours">En cours</span>
+                            </div>
+                            <span class="card-category">Refroidissement</span>
+                            <h3 class="card-title">Intégration radiateur GRD & marche forcée</h3>
+                            <p class="card-desc">Recherche d'un radiateur de 205 GRD pour améliorer le refroidissement. Conception du circuit de marche forcée sur le ventilateur avec thermostat réglable et forçage manuel.</p>
+                            <a href="#" class="card-instagram" target="_blank" rel="noopener">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="2" width="20" height="20" rx="5"/>
+                                    <circle cx="12" cy="12" r="4"/>
+                                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                                </svg>
+                                Voir sur Instagram
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UPDATE 3 — En cours -->
+                <div class="update-card" data-status="en-cours">
+                    <div class="timeline-dot en-cours"></div>
+                    <div class="card-content">
+                        <div class="card-img-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <path d="M21 15l-5-5L5 21"/>
+                            </svg>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="card-date">En cours</span>
+                                <span class="badge badge-en-cours">En cours</span>
+                            </div>
+                            <span class="card-category">Électronique</span>
+                            <h3 class="card-title">Tableau de bord custom ESP32</h3>
+                            <p class="card-desc">Développement d'un tableau de bord sur mesure à base d'ESP32 et écran TFT IPS. Affichage : RPM, température huile, température eau, tension batterie. Marche forcée du ventilateur intégrée.</p>
+                            <a href="#" class="card-instagram" target="_blank" rel="noopener">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="2" width="20" height="20" rx="5"/>
+                                    <circle cx="12" cy="12" r="4"/>
+                                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                                </svg>
+                                Voir sur Instagram
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UPDATE 4 — À venir -->
+                <div class="update-card" data-status="a-venir">
+                    <div class="timeline-dot a-venir"></div>
+                    <div class="card-content">
+                        <div class="card-img-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <path d="M21 15l-5-5L5 21"/>
+                            </svg>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="card-date">Automne 2025</span>
+                                <span class="badge badge-a-venir">À venir</span>
+                            </div>
+                            <span class="card-category">Sécurité</span>
+                            <h3 class="card-title">Arceau & équipements de sécurité</h3>
+                            <p class="card-desc">Installation d'un arceau homologué, harnais 4 points, extincteur embarqué. Mise en conformité avec le règlement Europ'Raid.</p>
+                            <a href="#" class="card-instagram" target="_blank" rel="noopener">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="2" width="20" height="20" rx="5"/>
+                                    <circle cx="12" cy="12" r="4"/>
+                                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                                </svg>
+                                Voir sur Instagram
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UPDATE 5 — À venir -->
+                <div class="update-card" data-status="a-venir">
+                    <div class="timeline-dot a-venir"></div>
+                    <div class="card-content">
+                        <div class="card-img-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <path d="M21 15l-5-5L5 21"/>
+                            </svg>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="card-date">Hiver 2025-2026</span>
+                                <span class="badge badge-a-venir">À venir</span>
+                            </div>
+                            <span class="card-category">Carrosserie</span>
+                            <h3 class="card-title">Habillage & covering sponsors</h3>
+                            <p class="card-desc">Application du covering et intégration des logos partenaires sur la carrosserie. Finalisation de l'identité visuelle de la voiture pour l'Europ'Raid.</p>
+                            <a href="#" class="card-instagram" target="_blank" rel="noopener">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="2" width="20" height="20" rx="5"/>
+                                    <circle cx="12" cy="12" r="4"/>
+                                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                                </svg>
+                                Voir sur Instagram
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     ➡️ AJOUTER DE NOUVELLES ÉTAPES ICI en copiant un bloc ci-dessus
+                ============================================================ -->
+
+                <!-- Message si aucun résultat -->
+                <div class="empty-state" id="emptyState">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 8v4M12 16h.01"/>
+                    </svg>
+                    <p>Aucune étape dans cette catégorie pour le moment.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA bas de page -->
+    <section style="background-color: var(--accent-blue); padding: 4rem 0; color: #FFF; text-align: center;">
+        <div class="container">
+            <h2 style="color:#FFF; font-size: 2rem; margin-bottom: 1rem;">Vous voulez soutenir la préparation ?</h2>
+            <p style="color: rgba(255,255,255,0.8); font-size: 1.1rem; margin-bottom: 2rem;">Pièces mécaniques, équipements ou soutien financier — chaque coup de pouce compte.</p>
+            <a href="aider.html" class="btn" style="background:#FFF; color: var(--accent-blue); font-weight:800;">Nous aider</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="logo-link" style="margin-bottom: 1.5rem;">
+                        <span class="logo-text" style="color:#FFF;">205<span style="color:var(--accent-red)">LUG</span>DUNUM</span>
+                    </div>
+                    <p>Une équipe engagée dans l'Europ'Raid pour acheminer du matériel scolaire en Europe de l'Est via un défi sportif et culturel inoubliable.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <p>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="4" width="20" height="16" rx="2" />
+                            <path d="M2 4L12 14L22 4" />
+                        </svg>
+                        <a href="mailto:205lugdunum@gmail.com">205lugdunum@gmail.com</a>
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h3>Association</h3>
+                    <p>N° RNA : W691110386</p>
+                    <p>SIRET : 945 327 021 00016</p>
+                    <p>Association à but non lucratif.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2024 Association 205 LUGDUNUM. Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Filtres par statut
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.update-card');
+        const emptyState = document.getElementById('emptyState');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Mise à jour bouton actif
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+                let visible = 0;
+
+                cards.forEach(card => {
+                    if (filter === 'all' || card.dataset.status === filter) {
+                        card.classList.remove('hidden');
+                        visible++;
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+
+                emptyState.style.display = visible === 0 ? 'block' : 'none';
+            });
+        });
+    </script>
+
+</body>
+</html>
