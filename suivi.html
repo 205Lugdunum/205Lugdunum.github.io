@@ -169,12 +169,260 @@
             overflow: hidden;
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
+            cursor: pointer;
         }
 
         .update-card .card-content:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
             border-color: var(--accent-blue);
+        }
+
+        /* Indicateur de clic / "En savoir plus" */
+        .card-more-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.85rem;
+            color: var(--accent-red);
+            font-weight: 700;
+            margin-top: 1rem;
+            transition: var(--transition);
+        }
+
+        .update-card .card-content:hover .card-more-link {
+            color: var(--accent-blue);
+        }
+
+        .card-more-link svg {
+            transition: transform 0.2s ease;
+        }
+
+        .update-card .card-content:hover .card-more-link svg {
+            transform: translateX(4px);
+        }
+
+        /* ============================
+           POP-UP MODAL SYSTEM
+        ============================ */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        .modal-wrapper {
+            position: relative;
+            width: 90%;
+            max-width: 700px;
+            max-height: 85vh;
+            background: #FFF;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            overflow-y: auto;
+            z-index: 1001;
+            transform: scale(0.92) translateY(15px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal.active .modal-wrapper {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #FFF;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1002;
+            transition: var(--transition);
+            color: var(--text-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .modal-close-btn:hover {
+            color: var(--accent-red);
+            transform: rotate(90deg);
+            border-color: var(--accent-red);
+        }
+
+        .modal-content {
+            padding: 2.5rem 2rem 2.5rem;
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-color);
+            margin: 0.25rem 0 0.75rem;
+            line-height: 1.3;
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .modal-gallery-container {
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-gallery-slides {
+            display: flex;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            width: 100%;
+        }
+
+        .modal-gallery-slide {
+            width: 100%;
+            flex-shrink: 0;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-gallery-placeholder {
+            width: 100%;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        .modal-gallery-placeholder svg {
+            width: 64px;
+            height: 64px;
+            stroke-width: 1;
+        }
+
+        .modal-gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            z-index: 2;
+            transition: var(--transition);
+            color: var(--text-color);
+        }
+
+        .modal-gallery-nav:hover {
+            background: #FFF;
+            color: var(--accent-red);
+            border-color: var(--accent-red);
+        }
+
+        .modal-gallery-nav.prev {
+            left: 1rem;
+        }
+
+        .modal-gallery-nav.next {
+            right: 1rem;
+        }
+
+        .modal-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: -1.25rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        .modal-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(15, 23, 42, 0.2);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-dot.active {
+            background: var(--accent-red);
+            width: 20px;
+            border-radius: 4px;
+        }
+
+        .modal-body-text {
+            font-size: 1rem;
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        .modal-body-text p {
+            margin-bottom: 1.2rem;
+        }
+
+        .modal-body-text h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin: 1.8rem 0 0.6rem;
+        }
+
+        .modal-body-text ul {
+            margin-bottom: 1.2rem;
+            padding-left: 1.2rem;
+        }
+
+        .modal-body-text li {
+            margin-bottom: 0.4rem;
         }
 
         .update-card:nth-child(odd) .card-content {
@@ -438,15 +686,46 @@
                             </div>
                             <span class="card-category">Moteur</span>
                             <h3 class="card-title">Réfection complète du bloc moteur</h3>
-                            <p class="card-desc">Démontage, nettoyage et réfection complète du moteur 1.4L. Au programme : changement des joints (dont le joint de culasse), rodage des soupapes, remplacement de la distribution et de la pompe à eau pour repartir sur une base 100% fiable.</p>
-                            <a href="#" class="card-instagram" target="_blank" rel="noopener">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="2" y="2" width="20" height="20" rx="5"/>
-                                    <circle cx="12" cy="12" r="4"/>
-                                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-                                </svg>
-                                Voir sur Instagram
-                            </a>
+                            <p class="card-desc">Démontage, nettoyage et réfection complète du moteur 1.4L. Au programme : changement des joints, rodage des soupapes, distribution et pompe à eau.</p>
+                            
+                            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+                                <span class="card-more-link">
+                                    Voir les détails
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                    </svg>
+                                </span>
+                                <a href="#" class="card-instagram" target="_blank" rel="noopener">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="2" width="20" height="20" rx="5"/>
+                                        <circle cx="12" cy="12" r="4"/>
+                                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                                    </svg>
+                                    Instagram
+                                </a>
+                            </div>
+
+                            <!-- Détails pour la Pop-up -->
+                            <div class="card-details-hidden" style="display: none;">
+                                <div class="modal-gallery">
+                                    <img src="assets/suivi/moteur_refection_1.jpg" alt="Démontage culasse" onerror="this.remove()">
+                                    <img src="assets/suivi/moteur_refection_2.jpg" alt="Nettoyage bloc" onerror="this.remove()">
+                                    <img src="assets/suivi/moteur_refection_3.jpg" alt="Soupapes et joints" onerror="this.remove()">
+                                </div>
+                                <div class="modal-text">
+                                    <p>C'est le gros morceau mécanique de la préparation ! Le moteur TU3S de 1 360 cm³ (85 ch) a été entièrement sorti de la voiture pour subir une réfection complète afin de garantir une fiabilité maximale lors des 8 000 km de l'Europ'Raid.</p>
+                                    
+                                    <h4>Travaux en cours :</h4>
+                                    <ul>
+                                        <li><strong>Déculassage et nettoyage :</strong> Démontage complet du haut moteur pour enlever la calamine accumulée.</li>
+                                        <li><strong>Remplacement des joints :</strong> Changement systématique de tous les joints (joint de culasse renforcé, joints spi, joints de collecteurs d'admission et d'échappement).</li>
+                                        <li><strong>Rodage des soupapes :</strong> Nettoyage des sièges de soupape et rodage pour une étanchéité parfaite et un retour optimal des compressions.</li>
+                                        <li><strong>Distribution et pompe à eau :</strong> Remplacement à neuf du kit de distribution complet et de la pompe à eau pour éviter toute surchauffe ou rupture.</li>
+                                        <li><strong>Périphériques :</strong> Révision du carburateur double corps Solex, allumage neuf (bougies, faisceau, tête d'allumeur) et alternateur testé.</li>
+                                    </ul>
+                                    <p>C'est une étape minutieuse menée avec rigueur par toute l'équipe dans notre atelier.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -469,24 +748,51 @@
                             </div>
                             <span class="card-category">Refroidissement</span>
                             <h3 class="card-title">Intégration radiateur GRD & marche forcée</h3>
-                            <p class="card-desc">Recherche d'un radiateur de 205 GRD pour améliorer le refroidissement. Conception du circuit de marche forcée sur le ventilateur avec thermostat réglable et forçage manuel.</p>
-                            <a href="#" class="card-instagram" target="_blank" rel="noopener">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="2" y="2" width="20" height="20" rx="5"/>
-                                    <circle cx="12" cy="12" r="4"/>
-                                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-                                </svg>
-                                Voir sur Instagram
-                            </a>
+                            <p class="card-desc">Montage d'un radiateur plus grand de 205 Diesel et câblage d'un interrupteur de marche forcée manuel au tableau de bord.</p>
+                            
+                            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+                                <span class="card-more-link">
+                                    Voir les détails
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                    </svg>
+                                </span>
+                                <a href="#" class="card-instagram" target="_blank" rel="noopener">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="2" width="20" height="20" rx="5"/>
+                                        <circle cx="12" cy="12" r="4"/>
+                                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                                    </svg>
+                                    Instagram
+                                </a>
+                            </div>
+
+                            <!-- Détails pour la Pop-up -->
+                            <div class="card-details-hidden" style="display: none;">
+                                <div class="modal-gallery">
+                                    <img src="assets/suivi/radiateur_1.jpg" alt="Nouveau radiateur" onerror="this.remove()">
+                                    <img src="assets/suivi/radiateur_2.jpg" alt="Montage ventilateur double" onerror="this.remove()">
+                                </div>
+                                <div class="modal-text">
+                                    <p>Le refroidissement est le talon d'Achille des voitures sur l'Europ'Raid, en particulier dans les montagnes des Balkans sous 40°C. Nous avons décidé d'optimiser le circuit de refroidissement de notre Peugeot 205.</p>
+                                    
+                                    <h4>Modifications apportées :</h4>
+                                    <ul>
+                                        <li><strong>Radiateur de 205 Diesel (GRD) :</strong> Plus grand et plus épais que celui d'origine des modèles essence, offrant une plus grande surface d'échange thermique et un plus grand volume de liquide de refroidissement.</li>
+                                        <li><strong>Installation d'un double ventilateur :</strong> Montage d'un support de ventilateur double en façade pour maximiser le flux d'air à basse vitesse ou en montée.</li>
+                                        <li><strong>Système de marche forcée :</strong> Câblage d'un interrupteur dédié au tableau de bord. Cela nous permettra de déclencher manuellement les ventilateurs à pleine puissance en amont d'un col ou d'un embouteillage, indépendamment du thermocontact d'origine.</li>
+                                    </ul>
+                                    <p>Grâce à ce montage, le moteur travaillera toujours dans sa plage de température idéale, peu importent les conditions extérieures !</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- UPDATE 2 — Terminé (Plus ancien) -->
+                <!-- UPDATE 3 — Terminé (Plus ancien) -->
                 <div class="update-card" data-status="termine">
                     <div class="timeline-dot termine"></div>
                     <div class="card-content">
-                        <!-- Remplacer par <img class="card-img" src="assets/suivi/depouillement.jpg" alt="..."> quand la photo est dispo -->
                         <div class="card-img-placeholder">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                 <rect x="3" y="3" width="18" height="18" rx="2"/>
@@ -501,16 +807,43 @@
                             </div>
                             <span class="card-category">Mécanique</span>
                             <h3 class="card-title">Acquisition & dépouillement complet</h3>
-                            <p class="card-desc">Achat de la 205 GR 1.4 pour 600€. Début du dépouillement complet de l'habitacle — tout ce qui ne sert pas à rouler dégage. Premier diagnostic mécanique réalisé.</p>
-                            <!-- Remplacer # par le lien du post Instagram -->
-                            <a href="#" class="card-instagram" target="_blank" rel="noopener">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="2" y="2" width="20" height="20" rx="5"/>
-                                    <circle cx="12" cy="12" r="4"/>
-                                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-                                </svg>
-                                Voir sur Instagram
-                            </a>
+                            <p class="card-desc">Achat de la 205 GR pour 600€ et dépouillement complet de l'habitacle pour la vider et l'alléger au maximum.</p>
+                            
+                            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+                                <span class="card-more-link">
+                                    Voir les détails
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                    </svg>
+                                </span>
+                                <a href="#" class="card-instagram" target="_blank" rel="noopener">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="2" width="20" height="20" rx="5"/>
+                                        <circle cx="12" cy="12" r="4"/>
+                                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                                    </svg>
+                                    Instagram
+                                </a>
+                            </div>
+
+                            <!-- Détails pour la Pop-up -->
+                            <div class="card-details-hidden" style="display: none;">
+                                <div class="modal-gallery">
+                                    <img src="assets/suivi/acquisition_1.jpg" alt="La Peugeot 205 à l'achat" onerror="this.remove()">
+                                    <img src="assets/suivi/acquisition_2.jpg" alt="Intérieur dépouillé" onerror="this.remove()">
+                                </div>
+                                <div class="modal-text">
+                                    <p>C'est ici que tout commence ! En juin 2025, nous avons fait l'acquisition de notre Peugeot 205 GR phase 2 de 1990, de couleur rouge, comptabilisant 180 000 km au compteur. Une base saine avec très peu de corrosion.</p>
+                                    
+                                    <h4>Les premières étapes :</h4>
+                                    <ul>
+                                        <li><strong>Dépouillement de l'habitacle :</strong> Retrait des moquettes, isolants phoniques inutiles, plastiques superflus et banquette arrière pour gagner du poids et faciliter l'aménagement pour le transport du matériel solidaire.</li>
+                                        <li><strong>Grand nettoyage :</strong> Nettoyage complet du châssis et dégraissage intensif.</li>
+                                        <li><strong>Premier diagnostic :</strong> Inspection complète des trains roulants, du freinage et de l'état général de la structure. Bilan : châssis sain, trains arrière sans jeu, mais de nombreuses pièces d'usure à changer par sécurité.</li>
+                                    </ul>
+                                    <p>Une première étape excitante qui a soudé l'équipe et concrétisé le début officiel de notre aventure.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -574,6 +907,22 @@
         </div>
     </footer>
 
+    <!-- Modal Structure -->
+    <div id="updateModal" class="modal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-wrapper">
+            <button class="modal-close-btn" id="modalCloseBtn" aria-label="Fermer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="modal-content">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
     <script>
         // Filtres par statut
         const filterBtns = document.querySelectorAll('.filter-btn');
@@ -601,6 +950,214 @@
                 emptyState.style.display = visible === 0 ? 'block' : 'none';
             });
         });
+
+        // Système de Pop-up Modal pour les updates
+        const modal = document.getElementById('updateModal');
+        const modalContent = modal.querySelector('.modal-content');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const modalOverlay = document.getElementById('modalOverlay');
+
+        let currentSlideIndex = 0;
+        let totalSlides = 0;
+
+        function openModal(card) {
+            // Empêcher le défilement de la page arrière-plan
+            document.body.style.overflow = 'hidden';
+
+            const title = card.querySelector('.card-title').innerText;
+            const date = card.querySelector('.card-date').innerText;
+            const category = card.querySelector('.card-category').innerText;
+            const badge = card.querySelector('.badge');
+            
+            // Récupérer le contenu caché détaillé
+            const detailsHidden = card.querySelector('.card-details-hidden');
+            let detailsTextHtml = '';
+            let imagesHtml = '';
+            let hasImages = false;
+
+            if (detailsHidden) {
+                const textContainer = detailsHidden.querySelector('.modal-text');
+                if (textContainer) {
+                    detailsTextHtml = textContainer.innerHTML;
+                } else {
+                    detailsTextHtml = `<p>${card.querySelector('.card-desc').innerText}</p>`;
+                }
+
+                // Récupérer les images
+                const gallery = detailsHidden.querySelector('.modal-gallery');
+                if (gallery) {
+                    const imgs = gallery.querySelectorAll('img');
+                    if (imgs.length > 0) {
+                        hasImages = true;
+                        imgs.forEach(img => {
+                            imagesHtml += `<img class="modal-gallery-slide" src="${img.getAttribute('src')}" alt="${img.getAttribute('alt') || ''}" onerror="this.remove(); window.updateSlidesCount();">`;
+                        });
+                    }
+                }
+            } else {
+                detailsTextHtml = `<p>${card.querySelector('.card-desc').innerText}</p>`;
+            }
+
+            // Si aucune image n'est présente dans les détails masqués, essayer de prendre l'image de la carte ou utiliser le placeholder d'origine
+            if (!hasImages || imagesHtml === '') {
+                const mainImg = card.querySelector('.card-img');
+                if (mainImg) {
+                    imagesHtml = `<img class="modal-gallery-slide" src="${mainImg.getAttribute('src')}" alt="${mainImg.getAttribute('alt') || ''}">`;
+                    hasImages = true;
+                } else {
+                    // Si pas d'image du tout, afficher l'icône placeholder par défaut
+                    imagesHtml = `
+                        <div class="modal-gallery-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <path d="M21 15l-5-5L5 21"/>
+                            </svg>
+                        </div>
+                    `;
+                }
+            }
+
+            // Générer le HTML complet de la modale
+            modalContent.innerHTML = `
+                <div class="modal-header">
+                    <span class="card-category">${category}</span>
+                    <h2 class="modal-title">${title}</h2>
+                    <div class="modal-meta">
+                        <span class="card-date">${date}</span>
+                        <span class="${badge.className}">${badge.innerText}</span>
+                    </div>
+                </div>
+
+                <div class="modal-gallery-container">
+                    <div class="modal-gallery-slides" id="modalSlides">
+                        ${imagesHtml}
+                    </div>
+                    
+                    <!-- Boutons de navigation du slider -->
+                    <button class="modal-gallery-nav prev" id="modalPrevBtn" onclick="window.changeSlide(-1)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <button class="modal-gallery-nav next" id="modalNextBtn" onclick="window.changeSlide(1)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="modal-dots" id="modalDots"></div>
+
+                <div class="modal-body-text">
+                    ${detailsTextHtml}
+                </div>
+            `;
+
+            // Initialiser le slider
+            currentSlideIndex = 0;
+            updateSlidesCount();
+
+            // Afficher la modale
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Fermer au clic sur overlay ou bouton fermer
+        modalCloseBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', closeModal);
+
+        // Fermer avec la touche Échap
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Gérer le clic sur les cartes de la timeline
+        cards.forEach(card => {
+            const content = card.querySelector('.card-content');
+            if (content) {
+                content.addEventListener('click', (e) => {
+                    // Si on a cliqué sur un lien (ex: Instagram), ne pas ouvrir la modale
+                    if (e.target.closest('a')) {
+                        return;
+                    }
+                    openModal(card);
+                });
+            }
+        });
+
+        // Fonctions du slider / carrousel
+        function updateSlidesCount() {
+            const slidesContainer = document.getElementById('modalSlides');
+            if (!slidesContainer) return;
+
+            const slides = slidesContainer.querySelectorAll('.modal-gallery-slide');
+            totalSlides = slides.length;
+
+            const prevBtn = document.getElementById('modalPrevBtn');
+            const nextBtn = document.getElementById('modalNextBtn');
+            const dotsContainer = document.getElementById('modalDots');
+
+            if (totalSlides <= 1) {
+                if (prevBtn) prevBtn.style.display = 'none';
+                if (nextBtn) nextBtn.style.display = 'none';
+                if (dotsContainer) dotsContainer.style.display = 'none';
+            } else {
+                if (prevBtn) prevBtn.style.display = 'flex';
+                if (nextBtn) nextBtn.style.display = 'flex';
+                if (dotsContainer) {
+                    dotsContainer.style.display = 'flex';
+                    dotsContainer.innerHTML = '';
+                    for (let i = 0; i < totalSlides; i++) {
+                        const dot = document.createElement('span');
+                        dot.className = `modal-dot ${i === currentSlideIndex ? 'active' : ''}`;
+                        dot.addEventListener('click', () => goToSlide(i));
+                        dotsContainer.appendChild(dot);
+                    }
+                }
+            }
+            
+            goToSlide(currentSlideIndex);
+        }
+
+        function changeSlide(direction) {
+            currentSlideIndex += direction;
+            if (currentSlideIndex >= totalSlides) {
+                currentSlideIndex = 0;
+            } else if (currentSlideIndex < 0) {
+                currentSlideIndex = totalSlides - 1;
+            }
+            goToSlide(currentSlideIndex);
+        }
+
+        function goToSlide(index) {
+            currentSlideIndex = index;
+            const slidesContainer = document.getElementById('modalSlides');
+            if (!slidesContainer) return;
+
+            // Décalage en pourcentage pour le translate
+            slidesContainer.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+
+            // Mettre à jour les indicateurs (dots)
+            const dots = document.querySelectorAll('.modal-dot');
+            dots.forEach((dot, i) => {
+                if (i === currentSlideIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        // Rendre les fonctions accessibles globalement pour les appels inline/onerror
+        window.updateSlidesCount = updateSlidesCount;
+        window.changeSlide = changeSlide;
     </script>
 
 </body>
