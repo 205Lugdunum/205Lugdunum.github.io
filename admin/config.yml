@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: TON_PSEUDO/TON_REPO # <-- Mets ton repo GitHub ici
+  repo: 205Lugdunum/205lugdunum.github.io
   branch: main
 
 media_folder: "assets/suivi"
