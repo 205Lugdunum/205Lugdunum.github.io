@@ -1,0 +1,45 @@
+{
+  "global_progress": 15,
+  "steps": [
+    {
+      "status": "en-cours",
+      "date": "En cours",
+      "category": "Moteur",
+      "title": "Réfection complète du bloc moteur",
+      "desc": "Démontage, nettoyage et réfection complète du moteur 1.4L. Au programme : changement des joints, rodage des soupapes, distribution et pompe à eau.",
+      "instagram": "#",
+      "gallery": [
+        "assets/suivi/moteur_refection_1.jpg",
+        "assets/suivi/moteur_refection_2.jpg",
+        "assets/suivi/moteur_refection_3.jpg"
+      ],
+      "details_html": "<p>C'est le gros morceau mécanique de la préparation ! Le moteur TU3S de 1 360 cm³ (85 ch) a été entièrement sorti de la voiture pour subir une réfection complète afin de garantir une fiabilité maximale lors des 8 000 km de l'Europ'Raid.</p><h4>Travaux en cours :</h4><ul><li><strong>Déculassage et nettoyage :</strong> Démontage complet du haut moteur pour enlever la calamine accumulée.</li><li><strong>Remplacement des joints :</strong> Changement systématique de tous les joints.</li><li><strong>Rodage des soupapes :</strong> Nettoyage des sièges de soupape et rodage.</li><li><strong>Distribution et pompe à eau :</strong> Remplacement à neuf du kit complet.</li><li><strong>Périphériques :</strong> Révision du carburateur Solex, allumage neuf et alternateur testé.</li></ul>"
+    },
+    {
+      "status": "en-cours",
+      "date": "En cours",
+      "category": "Refroidissement",
+      "title": "Intégration radiateur GRD & marche forcée",
+      "desc": "Montage d'un radiateur plus grand de 205 Diesel et câblage d'un interrupteur de marche forcée manuel au tableau de bord.",
+      "instagram": "#",
+      "gallery": [
+        "assets/suivi/radiateur_1.jpg",
+        "assets/suivi/radiateur_2.jpg"
+      ],
+      "details_html": "<p>Le refroidissement est crucial pour les cols des Balkans sous 40°C.</p><h4>Modifications apportées :</h4><ul><li><strong>Radiateur de 205 Diesel (GRD) :</strong> Plus grand et plus épais.</li><li><strong>Installation d'un double ventilateur :</strong> Flux d'air maximisé.</li><li><strong>Système de marche forcée :</strong> Interrupteur manuel au tableau de bord.</li></ul>"
+    },
+    {
+      "status": "termine",
+      "date": "Juin 2025",
+      "category": "Mécanique",
+      "title": "Acquisition & dépouillement complet",
+      "desc": "Achat de la 205 GR pour 600€ et dépouillement complet de l'habitacle pour la vider et l'alléger au maximum.",
+      "instagram": "#",
+      "gallery": [
+        "assets/suivi/acquisition_1.jpg",
+        "assets/suivi/acquisition_2.jpg"
+      ],
+      "details_html": "<p>En juin 2025, achat de la 205 GR phase 2 de 1990 (180 000 km).</p><h4>Les premières étapes :</h4><ul><li><strong>Dépouillement de l'habitacle :</strong> Retrait moquettes et banquette.</li><li><strong>Grand nettoyage :</strong> Dégraissage intensif.</li><li><strong>Premier diagnostic :</strong> Châssis très sain.</li></ul>"
+    }
+  ]
+}

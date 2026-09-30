@@ -1,0 +1,45 @@
+backend:
+  name: github
+  repo: TON_PSEUDO/TON_REPO # <-- Mets ton repo GitHub ici
+  branch: main
+
+media_folder: "assets/suivi"
+public_folder: "assets/suivi"
+
+collections:
+  - name: "suivi"
+    label: "Préparation 205"
+    files:
+      - name: "updates"
+        label: "Étapes de préparation"
+        file: "content/suivi.json"
+        fields:
+          - label: "Pourcentage global d'avancement"
+            name: "global_progress"
+            widget: "number"
+            default: 15
+            min: 0
+            max: 100
+          - label: "Liste des étapes"
+            name: "steps"
+            widget: "list"
+            fields:
+              - label: "Statut"
+                name: "status"
+                widget: "select"
+                options:
+                  - { label: "Terminé", value: "termine" }
+                  - { label: "En cours", value: "en-cours" }
+                  - { label: "À venir", value: "a-venir" }
+                default: "en-cours"
+              - { label: "Date affichée", name: "date", widget: "string", default: "En cours" }
+              - { label: "Catégorie", name: "category", widget: "string", default: "Mécanique" }
+              - { label: "Titre de l'étape", name: "title", widget: "string" }
+              - { label: "Description courte (carte)", name: "desc", widget: "text" }
+              - { label: "Lien Instagram (optionnel)", name: "instagram", widget: "string", required: false }
+              - label: "Galerie photos"
+                name: "gallery"
+                widget: "list"
+                required: false
+                field: { label: "Photo", name: "image", widget: "image" }
+              - { label: "Détails complets (modale)", name: "details_html", widget: "markdown" }
